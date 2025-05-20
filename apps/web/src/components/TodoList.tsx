@@ -1,140 +1,145 @@
 // apps/web/src/components/TodoList.tsx
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Todo, CreateTodoInput, UpdateTodoInput } from '@todo-monorepo/datasource';
-import { addTodo, removeTodo, updateTodo, fetchTodos } from '../api/mock';
+import { Button } from '@todo-monorepo/ui';
+import useStore from "../state/todo";
 
-const API_URL = 'http://localhost:3000/todos';
+import { useState, useEffect } from "react";
+import { PlusCircle } from "lucide-react";
 
-// 组件中使用
-function getTodoList() {
-    const [todos, setTodos] = useState<Todo[]>([]);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
+import { AddEditDialogComp } from './AddEditDialog';
+import { AlertDialogComp } from './AlertDialog';
+import { TodoListItem } from './TodoListItem';
+import { TodoBase } from '@todo-monorepo/datasource';
 
-    useEffect(() => {
-        const loadTodos = async () => {
-            setLoading(true);
-            setError(null);
-            try {
-                const data = await fetchTodos();
-                setTodos(data);
-            } catch (err) {
-                setError("Failed to load todos");
-                console.error(err);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        loadTodos();
-    }, []);
-
-    // 其他逻辑...
-}
-
-export const TodoList: React.FC = () => {
-    const [todos, setTodos] = useState<Todo[]>([]);
-    const [newTodoTitle, setNewTodoTitle] = useState('');
+export default function TodoList() {
+    const { todos, addTodo, updateTodo, deleteTodo, fetchTodos } = useStore();
+    const [addEditComp, setAddEditComp] = useState<boolean>(false);
+    const [alertComp, setAlertComp] = useState<boolean>(false);
+    const [mode, setMode] = useState<'add' | 'edit'>('add');
+    const [currentEditTodoId, setCurrentEditTodoId] = useState<string>('');
+    const [deleteTodoId, setDeleteTodoId] = useState<string | null>(null);
 
     useEffect(() => {
         fetchTodos();
-    }, []);
+    }, [fetchTodos])
 
-    const fetchTodos = async () => {
+    // Handlers for CRUD operations
+    const addNewTask = () => {
+        setMode('add');
+        setAddEditComp(true);
+    };
+
+    const handleNewTask = async (newTodo: { title: string; description?: string, completed: boolean }) => {
         try {
-            const response = await axios.get<Todo[]>(API_URL);
-            setTodos(response.data);
+            await addTodo(newTodo);
+            setAddEditComp(false);
         } catch (error) {
-            console.error('Failed to fetch todos', error);
+            console.error("Error adding task:", error);
         }
     };
 
-    const addTodo = async (e: React.FormEvent) => {
-        e.preventDefault();
-        if (!newTodoTitle.trim()) return;
-
+    const handleEditTask = async (updatedTodo: TodoBase) => {
         try {
-            const input: CreateTodoInput = { title: newTodoTitle };
-            const response = await axios.post<Todo>(API_URL, input);
-            setTodos([...todos, response.data]);
-            setNewTodoTitle('');
+            await updateTodo({ id: currentEditTodoId, ...updatedTodo });
+            setAddEditComp(false);
         } catch (error) {
-            console.error('Failed to add todo', error);
+            console.error("Error editing task:", error);
         }
     };
 
-    const toggleTodo = async (todo: Todo) => {
+    const handleDeleteTask = async () => {
+        if (!deleteTodoId) return;
         try {
-            const input: UpdateTodoInput = {
-                id: todo.id,
-                completed: !todo.completed
-            };
-            const response = await axios.put<Todo>(`${API_URL}/${todo.id}`, input);
-            setTodos(todos.map(t => t.id === todo.id ? response.data : t));
+            await deleteTodo(deleteTodoId);
+            setAlertComp(false);
+            setDeleteTodoId(null);
         } catch (error) {
-            console.error('Failed to toggle todo', error);
+            console.error("Error deleting task:", error);
         }
     };
 
-    const deleteTodo = async (id: string) => {
-        try {
-            await axios.delete(`${API_URL}/${id}`);
-            setTodos(todos.filter(t => t.id !== id));
-        } catch (error) {
-            console.error('Failed to delete todo', error);
+    // UI interaction handlers
+    const openEditMode = (id: string) => {
+        setMode('edit');
+        setCurrentEditTodoId(id);
+        setAddEditComp(true);
+    };
+
+    const openDeleteConfirm = (id: string) => {
+        setDeleteTodoId(id);
+        setAlertComp(true);
+    };
+
+    const toggleTodoStatus = async (id: string) => {
+        const todo = todos.find(todo => todo.id === id);
+        if (todo) {
+            try {
+                await updateTodo({ id, title: todo.title, description: todo.description, completed: !todo.completed });
+            } catch (error) {
+                console.error("Error toggling task status:", error);
+            }
         }
     };
 
     return (
-        <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
-            <h1 className="text-2xl font-bold mb-6">Todo List</h1>
-            <form onSubmit={addTodo} className="flex mb-6">
-                <input
-                    type="text"
-                    value={newTodoTitle}
-                    onChange={(e) => setNewTodoTitle(e.target.value)}
-                    placeholder="Enter new todo"
-                    className="flex-grow p-2 border rounded-l-md"
-                />
-                <button
-                    type="submit"
-                    className="bg-blue-500 text-white p-2 rounded-r-md hover:bg-blue-600"
-                >
-                    Add
-                </button>
-            </form>
-            <ul>
-                {todos.map(todo => (
-                    <li
-                        key={todo.id}
-                        className="flex justify-between items-center p-3 border-b last:border-b-0"
-                    >
-                        <span
-                            className={`flex-grow ${todo.completed ? 'line-through text-gray-400' : ''}`}
-                        >
-                            {todo.title}
-                        </span>
-                        <div className="flex space-x-2">
-                            <button
-                                onClick={() => toggleTodo(todo)}
-                                className={`p-1 rounded ${todo.completed
-                                        ? 'bg-yellow-500 text-white'
-                                        : 'bg-green-500 text-white'
-                                    }`}
-                            >
-                                {todo.completed ? 'Undo' : 'Complete'}
-                            </button>
-                            <button
-                                onClick={() => deleteTodo(todo.id)}
-                                className="bg-red-500 text-white p-1 rounded"
-                            >
-                                Delete
-                            </button>
+        <>
+            <div className="w-full max-w-3xl mx-auto">
+                {/* Header with Add Button */}
+                <div className="mb-6">
+                    <Button className="hover:bg-green-700 h-full p-4 border-0 text-white rounded-sm shadow-xl w-full text-center flex items-center justify-center gap-2 bg-green-600 " onClick={addNewTask}>
+                        <PlusCircle className="mr-2 h-6 w-6 size-custom" />
+                        <span className='text-xl'>添加任务</span>
+                    </Button>
+                </div>
+
+                {/* Todo List */}
+                <div className="bg-transparent rounded-lg divide-y divide-gray-300">
+                    {todos.length === 0 ? (
+                        <div className="text-center p-4 text-gray-500">
+                            暂无任务，点击上方按钮添加
                         </div>
-                    </li>
-                ))}
-            </ul>
-        </div>
+                    ) : (
+                        todos.map((todo) => (
+                            <TodoListItem
+                                key={todo.id}
+                                {...todo}
+                                toggleTodoStatus={toggleTodoStatus}
+                                openEditMode={openEditMode}
+                                openDeleteConfirm={openDeleteConfirm}
+                            />
+                        ))
+                    )}
+                </div>
+            </div>
+
+            {/* Add/Edit Dialog */}
+            {/* 类型报错问题出在，子类型是字面量类型，二选一，而父级传参的类型是可选类型，在类型系统的范围内就是不兼容的，无论是不是做了值上面的判断 */}
+
+            {mode === 'add' ?
+                <AddEditDialogComp
+                    isOpen={addEditComp}
+                    onOpenChange={setAddEditComp}
+                    mode='add'
+                    initialData={undefined}
+                    onSubmit={handleNewTask}
+                /> :
+                <AddEditDialogComp
+                    isOpen={addEditComp}
+                    onOpenChange={setAddEditComp}
+                    mode='edit'
+                    initialData={{
+                        title: todos.find(todo => todo.id === currentEditTodoId)?.title as string,
+                        description: todos.find(todo => todo.id === currentEditTodoId)?.description,
+                        completed: todos.find(todo => todo.id === currentEditTodoId)?.completed as boolean
+                    }}
+                    onSubmit={handleEditTask}
+                />}
+
+            {/* Delete Confirmation Dialog */}
+            <AlertDialogComp
+                isOpen={alertComp}
+                onOpenChange={setAlertComp}
+                onConfirm={handleDeleteTask}
+            />
+        </>
     );
-};
+}

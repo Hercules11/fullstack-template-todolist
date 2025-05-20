@@ -1,6 +1,6 @@
-import { useState } from 'react'
 import './App.css'
-import { TodoList } from './components/TodoList'
+import TodoList from './components/TodoList'
+import "@todo-monorepo/ui/src/assets/styles/main.css"
 
 function App() {
 
