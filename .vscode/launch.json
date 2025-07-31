@@ -1,0 +1,14 @@
+// 启动复合任务
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node", // 类型可以是 "node", "coreclr", "java" 等，这里不重要，因为我们只用 preLaunchTask
+            "request": "launch",
+            "name": "🚀 Initialize Dev Terminals", // 给它一个易于识别的名字
+            "program": "${workspaceFolder}/non-existent-script.js", // 一个不存在的程序，因为我们不会真的启动它
+            "preLaunchTask": "Start All Services", // ⭐ 关键：指向 tasks.json 中的复合任务
+            "console": "internalConsole" // 或者 "integratedTerminal"，但我们主要关心 preLaunchTask
+        }
+    ]
+}

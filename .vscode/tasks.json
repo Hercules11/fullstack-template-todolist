@@ -1,0 +1,269 @@
+// .vscode/tasks.json
+{
+    "version": "2.0.0",
+    "tasks": [
+        // --- 单个服务/包的任务 ---
+        {
+            "label": "Start Web App", // 任务名称
+            "type": "shell",
+            "command": "pnpm run dev --host", // 你的启动命令
+            "options": {
+                "cwd": "${workspaceFolder}/apps/web" // 指定 web app 的路径
+            },
+            "isBackground": true,
+            "presentation": {
+                "group": "web app", // 分组
+                "panel": "new", // 每个任务开新终端
+                // "reveal": "silent" // 不自动跳出终端
+            },
+            "problemMatcher": [], // 后台任务通常需要这个
+            "runOptions": {
+                "runOn": "folderOpen"
+            }
+        },
+        {
+            "label": "Start Web App-null", // 任务名称
+            "type": "shell",
+            "command": "powershell -NoExit -Command \"cd .\"", // 你的启动命令
+            "options": {
+                "cwd": "${workspaceFolder}/apps/web" // 指定 web app 的路径
+            },
+            "isBackground": true,
+            "presentation": {
+                "group": "web app", // 分组
+                "panel": "new", // 每个任务开新终端
+                "clear": true // 运行前清空终端
+                        // "reveal": "silent" // 不自动跳出终端
+            },
+            "problemMatcher": [], // 后台任务通常需要这个
+            "runOptions": {
+                "runOn": "folderOpen"
+            }
+        },
+        {
+            "label": "Start API Service",
+            "type": "shell",
+            "command": "pnpm run start:dev", // 你的启动命令
+            "options": {
+                "cwd": "${workspaceFolder}/apps/server" // 指定 API 服务的路径
+            },
+            "isBackground": true,
+            "presentation": {
+                "group": "api service",
+                "panel": "new",
+                // "reveal": "silent"
+            },
+            "problemMatcher": [],
+            "runOptions": {
+                "runOn": "folderOpen"
+            }
+        },
+        {
+            "label": "Start API Service-null",
+            "type": "shell",
+            "command": "powershell -NoExit -Command \"cd .\"", // 你的启动命令
+            "options": {
+                "cwd": "${workspaceFolder}/apps/server" // 指定 API 服务的路径
+            },
+            "isBackground": true,
+            "presentation": {
+                "group": "api service",
+                "panel": "new",
+                "clear": true // 运行前清空终端
+                        // "reveal": "silent"
+            },
+            "problemMatcher": [],
+            "runOptions": {
+                "runOn": "folderOpen"
+            }
+        },
+        {
+            "label": "Start Mobile App",
+            "type": "shell",
+            "command": "pnpm run start", // 你的启动命令
+            "options": {
+                "cwd": "${workspaceFolder}/apps/mobile"
+            },
+            "isBackground": true,
+            "presentation": {
+                "group": "mobile app",
+                "panel": "new",
+                // "reveal": "silent"
+            },
+            "problemMatcher": [],
+            "runOptions": {
+                "runOn": "folderOpen"
+            }
+        },
+        {
+            "label": "Start Mobile App-null",
+            "type": "shell",
+            "command": "powershell -NoExit -Command \"cd .\"", // 你的启动命令
+            "options": {
+                "cwd": "${workspaceFolder}/apps/mobile"
+            },
+            "isBackground": true,
+            "presentation": {
+                "group": "mobile app",
+                "panel": "new",
+                "clear": true,
+                // "reveal": "silent"
+            },
+            "problemMatcher": [],
+            "runOptions": {
+                "runOn": "folderOpen"
+            }
+        },
+        {
+            "label": "Open datasource Directory",
+            "type": "shell",
+            "command": "powershell -NoExit -Command \"cd .\"", // 你的启动命令
+            "options": {
+                "cwd": "${workspaceFolder}/packages/datasource"
+            },
+            "isBackground": true,
+            "presentation": {
+                "group": "datasource",
+                "panel": "new",
+                // "reveal": "silent"
+            },
+            "problemMatcher": [],
+            "runOptions": {
+                "runOn": "folderOpen"
+            },
+        },
+        {
+            "label": "Open datasource Directory-null",
+            "type": "shell",
+            "command": "powershell -NoExit -Command \"cd .\"", // 你的启动命令
+            "options": {
+                "cwd": "${workspaceFolder}/packages/datasource"
+            },
+            "isBackground": true,
+            "presentation": {
+                "group": "datasource",
+                "panel": "new",
+                "clear": true,
+                // "reveal": "silent"
+            },
+            "problemMatcher": [],
+            "runOptions": {
+                "runOn": "folderOpen"
+            },
+        },
+        {
+            "label": "Open shared Directory",
+            "type": "shell",
+            "command": "powershell -NoExit -Command \"cd .\"", // 你的启动命令
+            "options": {
+                "cwd": "${workspaceFolder}/packages/shared"
+            },
+            "isBackground": true,
+            "presentation": {
+                "group": "shared",
+                "panel": "new",
+                // "reveal": "silent"
+            },
+            "problemMatcher": [],
+            "runOptions": {
+                "runOn": "folderOpen"
+            },
+        },
+        {
+            "label": "Open shared Directory-null",
+            "type": "shell",
+            "command": "powershell -NoExit -Command \"cd .\"", // 你的启动命令
+            "options": {
+                "cwd": "${workspaceFolder}/packages/shared"
+            },
+            "isBackground": true,
+            "presentation": {
+                "group": "shared",
+                "panel": "new",
+                "clear": true,
+                // "reveal": "silent"
+            },
+            "problemMatcher": [],
+            "runOptions": {
+                "runOn": "folderOpen"
+            },
+        },
+        {
+            "label": "Open ui Directory",
+            "type": "shell",
+            "command": "powershell -NoExit -Command \"cd .\"", // 你的启动命令
+            "options": {
+                "cwd": "${workspaceFolder}/packages/ui"
+            },
+            "isBackground": true,
+            "presentation": {
+                "group": "ui",
+                "panel": "new",
+                // "reveal": "silent"
+            },
+            "problemMatcher": [],
+            "runOptions": {
+                "runOn": "folderOpen"
+            },
+        },
+        {
+            "label": "Open ui Directory-null",
+            "type": "shell",
+            "command": "powershell -NoExit -Command \"cd .\"", // 你的启动命令
+            "options": {
+                "cwd": "${workspaceFolder}/packages/ui"
+            },
+            "isBackground": true,
+            "presentation": {
+                "group": "ui",
+                "panel": "new",
+                "clear": true,
+                // "reveal": "silent"
+            },
+            "problemMatcher": [],
+            "runOptions": {
+                "runOn": "folderOpen"
+            },
+        },
+        {
+            "label": "Defer tasks",
+            "type": "shell",
+            "command": "powershell",
+            "args": [
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                "${workspaceFolder}/.vscode/delay-task.ps1"
+            ],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            }
+        },
+        // --- 复合任务 ---
+        {
+            "label": "Start All Services", // 复合任务名称
+            "dependsOn": [
+                "Start Web App", // 依赖上面定义的任务 label
+                "Start Web App-null", // 依赖上面定义的任务 label
+                "Start API Service",
+                "Start API Service-null",
+                "Start Mobile App",
+                "Start Mobile App-null",
+                "Open datasource Directory",
+                "Open datasource Directory-null",
+                "Open shared Directory",
+                "Open shared Directory-null",
+                "Open ui Directory",
+                "Open ui Directory-null"
+            ],
+            "dependsOrder": "sequence", // 并行启动
+            "problemMatcher": [], // 复合任务本身通常不需要 problemMatcher
+            "runOptions": {
+                "runOn": "folderOpen" // ***核心：工作区打开时自动运行此任务***
+            }
+        }
+    ]
+}

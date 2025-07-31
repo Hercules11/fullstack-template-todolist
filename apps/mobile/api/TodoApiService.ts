@@ -1,6 +1,7 @@
 // TodoApiService.ts
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 import { Todo, TodoState } from "@todo-monorepo/datasource";
+// import { API_URL } from "@env"; // 使用dotenv加载环境变量
 
 
 // Todo API 服务类
@@ -10,8 +11,8 @@ class TodoApiService {
 
 	constructor() {
 		// this.baseUrl = "http://localhost:3000/api";
-		console.log(import.meta.env);
-		this.baseUrl = import.meta.env.VITE_BASE_URL ||  "http://localhost:3000/api";
+		// console.log(API_URL);
+		this.baseUrl = "http://localhost:3000/api";
 
 
 		// 创建 axios 实例

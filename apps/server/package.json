@@ -82,12 +82,6 @@
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
   },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "@nestjs/core",
-      "@swc/core"
-    ]
-  },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
   }
