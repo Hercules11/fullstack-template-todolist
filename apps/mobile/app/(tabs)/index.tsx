@@ -3,9 +3,9 @@ import { useState, useEffect } from 'react';
 import { Anchor, H2, Paragraph, Text, XStack, YStack } from 'tamagui'
 // import { ToastControl } from 'app/CurrentToast'
 import { AddTaskButton } from 'components/Button'
-import { TodoCard } from 'components/Card'
-import { AddEditTaskDialog } from 'components/Dialog'
-import { ConfirmDeleteDialog } from 'components/AlertDialog'
+import { TodoListItem } from 'components/TodoListItem'
+import { AddEditDialog } from 'components/AddEditDialog'
+import { AlertDiaglog } from 'components/AlertDialog'
 import useStore from 'state/todo';
 import type { TodoBase } from '@todo-monorepo/datasource';
 
@@ -88,7 +88,7 @@ export default function TabOneScreen() {
           <Text>暂无任务，点击上方按钮添加</Text>
         ) : (
           todos.map(todo => (
-            <TodoCard
+            <TodoListItem
               key={todo.id}
               {...todo}
               toggleTodoStatus={toggleTodoStatus}
@@ -99,14 +99,14 @@ export default function TabOneScreen() {
         )}
       </YStack>
       {mode === 'add' ?
-        <AddEditTaskDialog
+        <AddEditDialog
           isOpen={addEditComp}
           onOpenChange={setAddEditComp}
           mode='add'
           initialData={undefined}
           onSubmit={handleNewTask}
         /> :
-        <AddEditTaskDialog
+        <AddEditDialog
           isOpen={addEditComp}
           onOpenChange={setAddEditComp}
           mode='edit'
@@ -117,7 +117,7 @@ export default function TabOneScreen() {
           }}
           onSubmit={handleEditTask}
         />}
-      <ConfirmDeleteDialog
+      <AlertDiaglog
         isOpen={alertComp}
         onOpenChange={setAlertComp}
         onConfirm={handleDeleteTask}

@@ -4,7 +4,7 @@ import { Edit3, Trash2 } from '@tamagui/lucide-icons';
 import type { TodoState, TodoOperate } from "@todo-monorepo/datasource"
 
 
-export const TodoCard = ({
+export const TodoListItem = ({
     id,
     title,
     description,

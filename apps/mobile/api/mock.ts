@@ -37,7 +37,7 @@ const mockTodos: Todo[] = [
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 // 模拟获取所有Todo
-export const getTodos = async (): Promise<Todo[]> => {
+export const getAllTodos = async (): Promise<Todo[]> => {
 	// 模拟50%几率的网络错误
 	if (Math.random() > 0.01) {
 		await delay(300);
@@ -49,7 +49,7 @@ export const getTodos = async (): Promise<Todo[]> => {
 };
 
 // 模拟添加Todo
-export const addTodo = async ({
+export const createTodo = async ({
 	id,
 	title,
 	description,
@@ -70,7 +70,7 @@ export const addTodo = async ({
 	return newTodo;
 };
 
-export const removeTodo = async (id: string): Promise<boolean> => {
+export const deleteTodo = async (id: string): Promise<boolean> => {
 	await delay(300);
 	const idx = mockTodos.findIndex((item) => item.id === id);
 	if (idx !== -1) {
@@ -95,7 +95,10 @@ export const updateTodo = async ({
 	const idx = mockTodos.findIndex((item) => item.id === id);
 	if (idx !== -1) {
 		mockTodos[idx].title = title ? title : mockTodos[idx].title;
-		mockTodos[idx].description = typeof description === 'undefined' ? mockTodos[idx].description : description;
+		mockTodos[idx].description =
+			typeof description === "undefined"
+				? mockTodos[idx].description
+				: description;
 		mockTodos[idx].updatedAt = new Date();
 		mockTodos[idx].completed = completed;
 		return true;

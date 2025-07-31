@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import type { State } from "@todo-monorepo/datasource";
 // import { addTodo, removeTodo, updateTodo, getTodos } from "../api/mock";
+// import * as todoApiService from "../api/mock"; mock api 和 正式的 api 名字要一样，以便快速降级
 import todoApiService from "../api/TodoApiService";
 import { guid } from "@todo-monorepo/shared";
 

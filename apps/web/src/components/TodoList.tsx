@@ -82,7 +82,7 @@ export default function TodoList() {
 
     return (
         <>
-            <div className="w-full max-w-3xl mx-auto">
+            <div className="w-full max-w-3xl mx-auto mt-4">
                 {/* Header with Add Button */}
                 <div className="mb-6">
                     <Button className="hover:bg-green-700 h-full p-4 border-0 text-white rounded-sm shadow-xl w-full text-center flex items-center justify-center gap-2 bg-green-600 " onClick={addNewTask}>

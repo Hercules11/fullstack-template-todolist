@@ -1,7 +1,9 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 @source "../../components/**/*.tsx";
 @source "../../../../../apps/web/src/components/**/*.{js,ts,jsx,tsx}";
-@import "tw-animate-css";
+/* https: //tailwindcss.com/docs/detecting-classes-in-source-files#explicitly-registering-sources */
+/* 原理就是， tailwind 是把原子类生成 css 样式规则，所以要指定扫描的文件，再把生成的规则引入到根组件 */
 
 @custom-variant dark (&:is(.dark *));
 

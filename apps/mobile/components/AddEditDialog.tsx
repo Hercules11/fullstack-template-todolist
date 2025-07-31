@@ -14,7 +14,7 @@ import { X } from '@tamagui/lucide-icons';
 
 import type { TodoBase, TodoState, TodoDialogProps } from "@todo-monorepo/datasource"
 
-export const AddEditTaskDialog = ({
+export const AddEditDialog = ({
     isOpen,
     onOpenChange,
     mode,

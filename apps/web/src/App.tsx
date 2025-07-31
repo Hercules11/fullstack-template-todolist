@@ -5,9 +5,7 @@ import "@todo-monorepo/ui/src/assets/styles/main.css"
 function App() {
 
   return (
-    <>
-      <TodoList />
-    </>
+    <TodoList />
   )
 }
 

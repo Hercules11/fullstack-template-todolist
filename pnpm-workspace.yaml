@@ -7,7 +7,3 @@ packages:
   - 'apps/*'
   # 排除测试目录中的包
   - '!**/test/**'
-
-overrides:
-  "react": "19.0.0"
-  "react-dom": "19.0.0"

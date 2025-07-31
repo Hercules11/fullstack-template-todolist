@@ -8,7 +8,7 @@ import {
 
 import type { AlertDialogComProps } from "@todo-monorepo/datasource"
 
-export const ConfirmDeleteDialog = ({
+export const AlertDiaglog = ({
   isOpen,
   onOpenChange,
   onConfirm,
