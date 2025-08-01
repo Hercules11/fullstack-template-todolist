@@ -3,7 +3,6 @@ import axios, { AxiosInstance, AxiosResponse } from "axios";
 import { Todo, TodoState } from "@todo-monorepo/datasource";
 // import { API_URL } from "@env"; // 使用dotenv加载环境变量
 
-
 // Todo API 服务类
 class TodoApiService {
 	private readonly apiClient: AxiosInstance;
@@ -11,9 +10,9 @@ class TodoApiService {
 
 	constructor() {
 		// this.baseUrl = "http://localhost:3000/api";
-		// console.log(API_URL);
-		this.baseUrl = "http://localhost:3000/api";
-
+		console.log(process.env.EXPO_PUBLIC_API_URL);
+		this.baseUrl =
+			process.env.EXPO_PUBLIC_API_URL || "http://localhost:3000/api";
 
 		// 创建 axios 实例
 		this.apiClient = axios.create({
@@ -56,9 +55,8 @@ class TodoApiService {
 	 */
 	async getAllTodos(): Promise<Todo[]> {
 		try {
-			const response: AxiosResponse<Todo[]> = await this.apiClient.get(
-				"/todos"
-			);
+			const response: AxiosResponse<Todo[]> =
+				await this.apiClient.get("/todos");
 			return response.data;
 		} catch (error) {
 			console.error("获取Todo列表失败:", error);
@@ -137,7 +135,7 @@ class TodoApiService {
 	async deleteTodo(id: string): Promise<boolean> {
 		try {
 			await this.apiClient.delete(`/todos/${id}`);
-			return true
+			return true;
 		} catch (error) {
 			console.error(`删除Todo(ID: ${id})失败:`, error);
 			throw error;

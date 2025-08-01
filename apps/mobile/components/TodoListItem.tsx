@@ -1,5 +1,5 @@
-import { Card, XStack, YStack, Text, Button, Checkbox } from 'tamagui';
-import { Edit3, Trash2 } from '@tamagui/lucide-icons';
+import { Card, XStack, YStack, Text, Button, Checkbox, Label } from 'tamagui';
+import { Edit3, Trash2, Check as CheckIcon } from '@tamagui/lucide-icons';
 
 import type { TodoState, TodoOperate } from "@todo-monorepo/datasource"
 
@@ -30,15 +30,18 @@ export const TodoListItem = ({
             <Card.Header padded>
                 <XStack>
                     {/* Left side with checkbox and content */}
-                    <XStack flex={1} >
+                    <XStack flex={1} onClick={() => toggleTodoStatus(id)} alignItems="flex-start">
                         <Checkbox
                             id={`checkbox-${id}`}
                             checked={completed}
-                            onCheckedChange={() => toggleTodoStatus(id)}
-                            size="$5"
-                        />
-
-                        <YStack flex={1}>
+                            // onCheckedChange={() => toggleTodoStatus(id)}
+                            size="$4"
+                        >
+                            <Checkbox.Indicator>
+                                <CheckIcon />
+                            </Checkbox.Indicator>
+                        </Checkbox>
+                        <YStack flex={1} gap="$1" paddingLeft="$2">
                             <Text
                                 fontSize="$5"
                                 fontWeight="600"

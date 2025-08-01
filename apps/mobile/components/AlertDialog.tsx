@@ -85,7 +85,7 @@ export const AlertDiaglog = ({
                 background="$background"
                 color="$color11"
                 fontWeight="500"
-                // onPress={}
+                onPress={() => onOpenChange(false)}
                 pressStyle={{ background: '$backgroundPress' }}
               >
                 {cancelText}

@@ -12,7 +12,7 @@ export function AddTaskButton(props) {
                 backgroundColor="oklch(0.627 0.194 149.214)"
                 color="white"
                 fontWeight="600"
-                fontSize="$5"
+                fontSize="$6"
                 borderRadius="$4"
                 icon={PlusCircle}
                 iconAfter={false} // 图标在文本前面

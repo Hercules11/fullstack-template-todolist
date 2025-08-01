@@ -38,7 +38,13 @@ export const AddEditDialog = ({
     const handleSubmit = () => {
         onSubmit(formData);
         setFormData({ title: "", description: "", completed: false }); // Reset form data after submission
+        onOpenChange(false); // Close the dialog after submission
     };
+
+    const handleCancel = () => {
+        setFormData({ title: "", description: "", completed: false }); // Reset form data on cancel
+        onOpenChange(false);
+    }
 
 
     return (
@@ -117,7 +123,7 @@ export const AddEditDialog = ({
                                 id="title"
                                 placeholder="任务标题"
                                 value={formData.title}
-                                onChangeText={(e) => setFormData({ ...formData, title: e.target.value })}
+                                onChangeText={(val) => setFormData({ ...formData, title: val })}
                                 size="$4"
                                 borderColor="#e2e2e2"
                                 focusStyle={{
@@ -134,8 +140,8 @@ export const AddEditDialog = ({
                                 id="description"
                                 placeholder="任务详细描述"
                                 value={formData.description || ""}
-                                onChangeText={(e) =>
-                                    setFormData({ ...formData, description: e.target.value })}
+                                onChangeText={(val) =>
+                                    setFormData({ ...formData, description: val })}
                                 size="$4"
                                 borderColor="#e2e2e2"
                                 focusStyle={{
@@ -149,7 +155,7 @@ export const AddEditDialog = ({
                         <Dialog.Close displayWhenAdapted asChild>
                             <Button
                                 aria-label="Cancel"
-                                // onPress={handleCancel}
+                                onPress={handleCancel}
                                 flex={1}
                                 background="$gray3"
                                 borderColor="#e2e2e2"
